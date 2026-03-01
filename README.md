@@ -1,4 +1,4 @@
-# 📄 Talk to Documents — RAG Assistant
+# 📄 TalkToTextAI - Talk to Documents
 
 A Retrieval-Augmented Generation (RAG) application that lets you upload PDF or text documents and ask questions about them in natural language. Answers are grounded strictly in your documents, with source citations for every response.
 
@@ -14,30 +14,6 @@ A Retrieval-Augmented Generation (RAG) application that lets you upload PDF or t
 
 ---
 
-## Architecture Summary
-
-```
-User → Streamlit UI → Document Ingestion → OpenAI Embeddings → Pinecone
-                   ↓
-              User Query → Embed Query → Pinecone Search → Top-5 Chunks
-                   ↓
-              Claude (Anthropic) → Grounded Answer + Citations
-```
-
-Full architecture documentation is in `docs/architecture.md`.
-
-**Tech stack:**
-| Layer | Tool |
-|---|---|
-| UI | Streamlit |
-| LLM (answers) | Anthropic Claude (claude-sonnet-4-6) |
-| Embeddings | OpenAI text-embedding-3-small |
-| Vector database | Pinecone (serverless) |
-| PDF parsing | PyMuPDF |
-| Environment | Python 3.10+ |
-
----
-
 ## Setup Instructions
 
 ### Step 1 — Prerequisites
@@ -50,8 +26,8 @@ Make sure you have:
 ### Step 2 — Clone or Download the Project
 
 ```bash
-git clone https://github.com/your-username/rag-assistant.git
-cd rag-assistant
+git clone https://github.com/your-username/TalkToTextAI.git
+cd TalkToTextAI
 ```
 
 Or download and unzip the project folder manually.
@@ -87,7 +63,7 @@ Open the `.env` file in the project root. It looks like this:
 ANTHROPIC_API_KEY=your-anthropic-api-key-here
 OPENAI_API_KEY=your-openai-api-key-here
 PINECONE_API_KEY=your-pinecone-api-key-here
-PINECONE_INDEX_NAME=rag-assistant
+PINECONE_INDEX_NAME=talk-to-text
 ```
 
 Replace each placeholder with your real key. Save the file.
@@ -100,7 +76,7 @@ Where to get each key:
 ### Step 6 — Create Your Pinecone Index
 
 Log in to https://app.pinecone.io and create a new index with these settings:
-- **Name:** `rag-assistant` (must match PINECONE_INDEX_NAME in your .env)
+- **Name:** `talk-to-text` (must match PINECONE_INDEX_NAME in your .env)
 - **Dimensions:** `1536`
 - **Metric:** `cosine`
 - **Type:** Serverless
@@ -129,7 +105,7 @@ Your browser will open automatically at `http://localhost:8501`.
 ANTHROPIC_API_KEY = "sk-ant-..."
 OPENAI_API_KEY = "sk-proj-..."
 PINECONE_API_KEY = "pcsk_..."
-PINECONE_INDEX_NAME = "rag-assistant"
+PINECONE_INDEX_NAME = "talk-to-text"
 ```
 
 5. Click Deploy. Your app will be live at a public URL in under 5 minutes.
@@ -181,34 +157,6 @@ rag-assistant/
 - **Answers are only as good as the documents.** If the answer isn't in the document, the app will say so rather than guess.
 - **Scanned PDFs with no text layer are not supported.** PyMuPDF reads text; it does not perform OCR on image-based PDFs.
 - **Large files take longer.** A 200-page PDF may take 30–60 seconds to process on first upload.
-
----
-
-## Future Improvements
-
-- Multi-user support with isolated Pinecone namespaces per session
-- OCR support for scanned PDFs (via Tesseract or a cloud OCR API)
-- Persistent conversation history stored in a database
-- Document management UI (rename, re-upload, preview)
-- Hybrid search (keyword + semantic) for improved retrieval precision
-- Answer confidence scores displayed in the UI
-- Export conversation as PDF or markdown
-
----
-
-## Troubleshooting
-
-**"Missing required environment variables" error**
-Open `.env` and make sure all three API keys are filled in. No spaces around the `=` sign.
-
-**"Failed to process [filename]" on upload**
-The file may be corrupted or password-protected. Try re-exporting the PDF.
-
-**Answers seem unrelated to the question**
-Try rephrasing your question to match the language used in the document. Very short questions like "what?" perform worse than specific ones like "what are the payment terms?".
-
-**Pinecone index not found**
-Make sure the index name in your `.env` matches exactly what you created in the Pinecone dashboard. It is case-sensitive.
 
 ---
 
