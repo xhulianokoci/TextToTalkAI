@@ -1,4 +1,4 @@
-# RAG Assistant — Architecture Documentation
+# TalkToTextAI — Architecture Documentation
 
 ## Project Overview
 Talk to Documents is a Retrieval-Augmented Generation (RAG) application that lets users upload PDF or text files and query them in natural language. Answers are grounded strictly in the uploaded documents, with source citations for every response.
