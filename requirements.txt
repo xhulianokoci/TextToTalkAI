@@ -1,0 +1,30 @@
+# ============================================================
+# RAG Assistant — Python Dependencies
+# ============================================================
+# Install everything with:
+#   pip install -r requirements.txt
+# ============================================================
+
+# --- UI ---
+streamlit==1.32.0               # Web interface framework
+
+# --- LLM (Answer Generation) ---
+anthropic==0.25.0               # Claude API client
+
+# --- Embeddings ---
+openai==1.14.0                  # OpenAI embeddings (text-embedding-3-small)
+
+# --- Vector Database ---
+pinecone-client==3.2.2          # Pinecone cloud vector store
+
+# --- PDF Parsing ---
+pymupdf==1.24.0                 # Fast, reliable PDF text extraction (imported as fitz)
+
+# --- Environment Variables ---
+python-dotenv==1.0.1            # Loads .env file into environment
+
+# --- Text Chunking ---
+tiktoken==0.6.0                 # Token counting (same tokenizer OpenAI uses)
+
+# --- Utilities ---
+tenacity==8.2.3                 # Retry logic for API calls
